@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from whisper_testing import transcribe_audio
+
 app = FastAPI()
 
 origins = [
@@ -29,3 +31,8 @@ async def ping() -> str:
 @app.get("/echo/{text}")
 async def echo(text: str) -> JSONResponse:
     return JSONResponse({"echo": text})
+
+@app.get("/transcribe_macbeth")
+async def transcribe() -> str:
+    transcription = transcribe_audio("MacBeth_Voiceover.mp3")
+    return transcription
